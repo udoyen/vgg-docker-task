@@ -1,4 +1,4 @@
-# creates a layer froom the nginx:lts Docker imag
+# creates a layer froom the ubuntu:bionix Docker image
 FROM ubuntu:bionic
 
 # designate the workdir
@@ -10,10 +10,6 @@ RUN apt update
 RUN apt install nginx -y
 RUN apt-get install uwsgi-plugin-python3 python3-setuptools build-essential libssl-dev libffi-dev python3-virtualenv python3-pip python3-venv -y
 RUN pip3 install flask
-
-# RUN /usr/bin/uwsgi --build-plugin "/usr/src/uwsgi/plugins/python python36"
-# RUN mv python36_plugin.so /usr/lib/uwsgi/plugins/python36_plugin.so
-# RUN chmod 666 /usr/lib/uwsgi/plugins/python36_plugin.so
 
 # copy contents of app into workdir
 COPY ./app ./
@@ -32,6 +28,8 @@ RUN ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled/myprojec
 # check the state of the nginx conf
 RUN nginx -t
 
+# expose port 5000
 EXPOSE 5000
 
+# entry point for the app
 CMD [ "uwsgi", "--ini",  "./myproject.ini" ]
