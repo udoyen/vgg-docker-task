@@ -1,13 +1,15 @@
 # creates a layer froom the ubuntu:bionix Docker image
 FROM ubuntu:bionic
 
+LABEL maintainer="George Udosen datameshprojects@gmail.com"
+
 # designate the workdir
 WORKDIR /var/www/html/app
 
 
 # install required tools
 RUN apt update
-RUN apt install nginx -y
+RUN apt-get install nginx -y
 RUN apt-get install uwsgi-plugin-python3 python3-setuptools build-essential libssl-dev libffi-dev python3-virtualenv python3-pip python3-venv -y
 RUN pip3 install flask
 
